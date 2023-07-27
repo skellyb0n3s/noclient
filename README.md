@@ -3,6 +3,11 @@ noclient/noserver TAO tooling.
 
 #### Usage
 ```
+# keying instructions
+./genkey ./key
+./addkey.py -k ./key -p ./client.bin
+./addkey.py -k ./key ./server.bin
+
 # -help menu for client
 NO! osboxes:/>-help
 [07-27-23 22:24:42 GMT][localhost:37352 -> osboxes.127.0.0.1:32754]
