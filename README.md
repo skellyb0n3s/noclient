@@ -2,7 +2,112 @@
 noclient/noserver TAO tooling.
 
 #### Usage
-TBD
+```
+# -help menu for client
+NO! osboxes:/>-help
+[07-27-23 22:24:42 GMT][localhost:37352 -> osboxes.127.0.0.1:32754]
+[-help]
+
+Remote General Commands:
+Usage: -elevate 
+Usage: -getenv 
+Usage: -gs category|filename [options-if-any]
+Usage: -setenv VAR=[val]
+Usage: -shell [alt_shell]
+Usage: -status 
+Usage: -time 
+Usage: -ps [options]
+  select: -p pid1,pid2,... -q ppid1,ppid2,... -g gpid1,gpid2,...
+          -n user1,user2,... -u uid1,uid2,...
+          -t "ddMmmyy hh:mm"|yyyymmddhhmm|epoch
+  sort:   -P  -Q   -G   -N   -U  -T     -V
+          pid ppid gpid user uid time   inverse
+  grep:   -r regex [-v] [-i]
+  show uid: -I
+  show last 24hrs: -d
+  tree view: -H
+
+Remote Server Commands:
+Usage: -burn 
+Usage: -call toip toport
+Usage: -listen port
+Usage: -pid 
+
+Remote Network Commands:
+Usage: -icmptime target_ip [source_ip] 
+Usage: -ifconfig 
+Usage: -nslookup name1 ...
+Usage: -ping -r remote_target_ip [-l local_source_ip] [-i|-u|-t] [-p dest_port] [-s src_port]
+       -ping host
+       -ping [-u|-t|-i] host
+Usage: -trace -r remote_target_ip [-l local_source_ip] [-i|-u|-t] [-p dest_port] [-s src_port]
+       -trace host
+       -trace [-u|-t|-i] host
+
+Remote Redirection Commands:
+Usage: -irtun target_ip call_back_port|RHP [listen_ip] [ourtn arguments]
+Usage: -istun target_ip call_in_port|RHP [srcip] [ourtn arguments]
+Usage: -jackpop target_ip target_port source_ip source_port
+Usage: -nrtun [listenip:]port [fromip]
+Usage: -nstun toip [toport [localport [srcport [srcip]]]]
+       -nstun toip:port [srcip]
+Usage: -rawsend [-s] tcp_port
+Usage: -rtun [listenip:]port [toip [toport]] [fromip]
+Usage: -rutun [listenip:]port [toip [toport]]
+Usage: -scan [scan_name|port] [targetip]
+Usage: -sentry target_address source_address (tcp|udp) dest_port src_port interface
+Usage: -stun toip toport [localport [srcport [srcip]]]
+Usage: -sutun toip toport [localport [srcport [srcip]]]
+Usage: -tunnel [command_listen_port [udp|tcp [autoclose]]]
+Usage: -vscan  (should add help)
+
+Remote File Commands:
+Usage: -cat remfile
+Usage: -chili [-l] [-s lines] [-m max] MM-DD-YYYY remdir remfile [remfile ...]
+Usage: -cksum remfile ...
+Usage: -fget [MM-DD-YYYY] loclist
+Usage: -get [-l] [-q] [-v] [-s minimumsize] [-m MM-DD-YYYY] remfile ...
+Usage: -grep [-d] [-v] [-n] [-i] [-h] [-C number_of_context_lines] pattern file1 [file2 ...] 
+Usage: -oget [-a] [-q] [-s skipoff] [-b begoff] [-e endoff] remfile
+Usage: -put locfile remfile [mode]
+Usage: -strings remfile
+Usage: -tail [+/-n] remfile, + to skip n lines of remfile beginning
+Usage: -touch [-t mtime:atime | refremfile] remfile
+Usage: -rm remfile|remdir ...
+Usage: -upload file port [fromip]
+Usage: -mailgrep [-l] [-m maxbytes] [-r "regexp" [-v]] [-f regexpfilename [-v]] [-a "regexp for attachments to eliminate"] [-b MM-DD-YYYY] [-e MM-DD-YYYY] [-d remotedumpfile] remotedir file1 [file2 ...]
+ ex: -mailgrep -a ".doc" -r "^Fred" -b 2-28-2002 /var/spool/mail G*
+
+Remote Directory Commands:
+Usage: -find [-d] [-M | -m -mkfindsargs] [-x[m|a|c] MM-DD-YYYY] remdir [remdir...]
+Usage: -ls [-1ihuRt] [-x[m|a|c] MM-DD-YYYY] [remfile|remdir ...]
+Usage: -cd [remdir]
+Usage: -cdp 
+
+Local Client Commands:
+Usage: -autopilot port [xml]
+Usage: -cmdout [locfilename]
+Usage: -exit 
+Usage: -help 
+Usage: -hist 
+Usage: -keepalive [-d] [-r] [[-v] interval]
+Usage: -readrc [locfile]
+Usage: -remark [comment]
+Usage: -rem [comment]
+Usage: # [comment]
+Usage: -reset 
+
+Local Environment Commands:
+Usage: -lcd locdir
+Usage: -lgetenv 
+Usage: -lpwd 
+Usage: -lsetenv VAR=[val]
+Usage: -lsh [[-q] command]
+
+Aliases:
+
+NO! osboxes:/>
+```
 
 ### Client (noclient)
 ```
