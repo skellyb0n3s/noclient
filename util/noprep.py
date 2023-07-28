@@ -1,12 +1,40 @@
 #!/usr/bin/env python
-version = '2.0.0.1'
+version = '2.0.0.2'
 
-import sys
 import os
-import os.path
+import re
+import sys
 import shutil
+import os.path
+import subprocess
 
 VAR_NAME = 'D'
+
+def execute(cmd, printit=False):
+    
+    if printit:
+        print 'executing: [%s]' % cmd
+
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+    output = proc.stdout.read()
+
+    return output
+
+
+def parse_output(output):
+
+    ret_lines = []
+
+    if output.__class__() != []:
+        output = output.split('\n')
+
+    for line in output:
+        if re.match('^\[\#\] (Name|Value):.*$', line) or \
+           re.match('^    0x.*$', line):
+            ret_lines.append(line)
+
+    return '\n'.join(ret_lines)
+
 
 def usage():
 
@@ -71,6 +99,10 @@ def main():
             outfile = '%s.new' % infile
             argsidx = 2
 
+        if os.path.exists(outfile) and not os.path.isfile(outfile):
+            print 'ERROR: "%s" is not a file' % outfile
+            sys.exit(1)
+
     if not os.path.exists(infile):
         print 'ERROR: "%s" does not exist' % infile
         sys.exit(1)
@@ -79,26 +111,38 @@ def main():
         nopenargs = ' '.join(sys.argv[argsidx:])
         dostore = 1
 
+    # check that infile is a valid noserver
+    output = execute('Store --file="%s" --get="svr"' % infile)
+    if parse_output(output) == '':
+        print 'ERROR: "%s" not a valid noserver' % infile
+        sys.exit(1)
+
+    print 'File "%s" is a valid noserver' % infile
+
     if dostore:
-        print 'ASCII arguments in in between double colons:'
+        print '\nASCII arguments to store are between double colons:'
         print '::%s::\n' % nopenargs
         shutil.copy(infile, outfile)
-        storestr = 'echo -n "%s" | Store --nullterminate --file="%s" --set="%s"' % (nopenargs, outfile, VAR_NAME)
-        print 'executing Store:\n%s\n' % storestr
-        os.system(storestr)
+        storestr = 'echo -n "%s" | Store --nullterminate --file="%s" --set="%s" --get="%s"' % \
+            (nopenargs, outfile, VAR_NAME, VAR_NAME)
+        output = execute(storestr, True)
     else:
-        os.system('Store --file="%s" --get="%s"' % (infile, VAR_NAME))
+        output = execute('Store --file="%s" --get="%s"' % (infile, VAR_NAME))
+
+    value = parse_output(output)
+    if value != '':
+        print '\nFound variable %s:' % VAR_NAME
+        print value
 
     files = infile
     if outfile != None:
         files = '%s %s' % (files, outfile)
 
     print '\nlisting:'
-    os.system('ls -l %s' % files)
+    print execute('ls -l %s' % files)
 
-    print '\nsha1sums:'
-    os.system('sha1sum %s' % files)
-    print ''
+    print 'sha1sums:'
+    print execute('sha1sum %s' % files)
 
 
 if __name__ == '__main__':
