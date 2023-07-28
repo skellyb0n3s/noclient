@@ -5,6 +5,7 @@ FROM ubuntu:22.04
 RUN apt-get update && apt-get install -y \
     python2 \
     lib32z1 \
+    git \
     && ln -s /usr/bin/python2.7 /usr/bin/python
 
 # Set the working directory
