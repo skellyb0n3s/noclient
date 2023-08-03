@@ -7,6 +7,10 @@ e.g. inject into http traffic
 #### Usage
 ```
 # keying instructions
+Implants and client are pinned with 32byte pub/priv keys.
+Use Store.py for com_private and com_public.
+Generate two key pairs and embed priv/pub2 to client and priv2/pub to implant.
+
 ./client <targetip>:<port>
 
 SD> ping
