@@ -18,6 +18,11 @@ Thu, 03 Aug 2023 19:18:19 +0000
 Automatically synchronizing...
 Synchronize success
 
+
+# Install DNS hijack on all DNS
+./create_dns_injection.py -a OFFSET:12,A,0,192.168.1.1 -o response.bin
+SD> rule 1 --appdns --matches 0 --interval 0 --injectfile ./response.bin
+
 [SUCCESS]
 
 SD> rule 1 --apphttp --matches 0 --interval 0 --inject IGOTINJECTEDSTRING
